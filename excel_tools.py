@@ -22,7 +22,7 @@ def main():
 @click.option(
     "-o",
     "--output-dir",
-    help="Directory to place exports.",
+    help="Alternate directory to place exports.",
     type=click.Path(resolve_path=True),
 )
 @click.option(
@@ -38,7 +38,7 @@ def main():
     "--raw-sheet-names",
     is_flag=True,
     show_default=True,
-    help="Stops script from stripping leading and trailing spaces from sheet names before saving files.",
+    help="Stop script from stripping leading and trailing spaces from sheet names before saving files.",
     type=click.BOOL,
 )
 @click.option(
@@ -46,7 +46,7 @@ def main():
     "--suppress-prompt",
     is_flag=True,
     show_default=True,
-    help="Prompt user for which sheets to export. Exports all when True.",
+    help="Suppress user prompt for which sheets to export. Exports all when True.",
     type=click.BOOL,
 )
 def split_sheet(input_file, output_dir, file_type, raw_sheet_names, suppress_prompt):
