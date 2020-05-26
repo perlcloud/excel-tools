@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from tools.lazy_load import MyCLI
+from utils.lazy_load import MyCLI
 
 
 if __name__ == '__main__':

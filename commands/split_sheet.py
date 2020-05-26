@@ -2,8 +2,9 @@
 
 import click
 from pathlib import Path
-import pandas as pd
-from tools.inquirer import Inquire
+from utils.inquirer import Inquire
+
+from tools.excel_file_tools import ExcelFile
 
 inquire = Inquire()
 
@@ -49,32 +50,15 @@ def split_sheet(input_file, output_dir, file_type, raw_sheet_names, suppress_pro
     A folder with the same name as the input file will be created.
     Each Excel sheet is exported as an individual file, with a name matching the name of the Excel sheet
     """
-    input_file = Path(input_file)
-
-    output_path = (
-        Path.cwd().joinpath(input_file.stem) if not output_dir else Path(output_dir)
-    )
+    file = ExcelFile(input_file)
+    output_path = (Path.cwd().joinpath(file.path.stem) if not output_dir else Path(output_dir))
     output_path.mkdir(exist_ok=True)  # Create output directory if it does not exist
 
-    excel_file = pd.ExcelFile(input_file)
-    sheet_names = [
-        x.strip() if not raw_sheet_names else x for x in excel_file.sheet_names
-    ]
-
-    if not suppress_prompt:
-        # Ask user for input via PyInquirer
-        inquire.question(
-            inquire.CHECKBOX,
-            message="Select sheets to export as files",
-            name="sheets",
-            choices=[{"name": x, "checked": True} for x in sheet_names]
-        )
-        sheets_for_export = inquire.ask()["sheets"]
-    else:
-        sheets_for_export = sheet_names
+    sheet_names = file.stripped_sheet_names if not raw_sheet_names else file.sheet_names
+    sheets_for_export = file.select_sheets() if not suppress_prompt else sheet_names
 
     with click.progressbar(
-        excel_file.sheet_names,
+        file.sheet_names,
         label=f"Exporting {len(sheets_for_export)} sheets as .{file_type} files",
     ) as sheet_names:
         for sheet_name in sheet_names:
@@ -83,7 +67,7 @@ def split_sheet(input_file, output_dir, file_type, raw_sheet_names, suppress_pro
                 print(f"Processing: '{sheet_name}'", end=" ")
                 output_file = output_path.joinpath(f"{output_file_stem}.{file_type}")
 
-                df = excel_file.parse(sheet_name)
+                df = file.get_sheet(sheet_name)
                 if file_type == "csv":
                     df.to_csv(output_file)
                 elif file_type == "txt":
