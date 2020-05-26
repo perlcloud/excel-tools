@@ -52,3 +52,21 @@ class ExcelFile:
             choices=[{"name": x, "checked": True} for x in sheet_names]
         )
         return inquire.ask()["sheets"]
+
+    def get_metadata(self, filter=None, raw_sheet_names=False):
+        """
+        Returns a data frame of metadata about the sheets
+        :param filter: List of sheets to return data for
+        :param raw_sheet_names: Do not strip sheet names
+        :return: Data frame
+        """
+        sheet_names = self.sheet_names if not filter else [x for x in self.sheet_names if x in filter]
+
+        data = {"Sheet Name": [], "Rows": [], "Columns": []}
+        for sheet_name in sheet_names:
+            sheet = self.get_sheet(sheet_name)
+            data["Sheet Name"].append(sheet_name if raw_sheet_names else sheet_name.strip())
+            data["Rows"].append(len(sheet))
+            data["Columns"].append(len(sheet.columns))
+
+        return pd.DataFrame(data=data)
