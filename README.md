@@ -4,13 +4,13 @@ A command line utility for manipulating and processing Excel files.
 It aims to automate normalization processes on excel files, preparing them for further automation such as batch processing.
 
 Current Tools:
-- **split_sheet:**
+- **split:**
     
     Splits each sheet in an Excel file into individual files.
 
     A folder with the same name as the input file will be created.
     Each Excel sheet is exported as an individual file, with a name matching the name of the Excel sheet
-- **list_sheets:**
+- **list:**
     
     Lists the names of sheets in an excel file.
     Sheet metadata available with '-v/--verbose' flag! 
