@@ -13,7 +13,11 @@ class MyCLI(click.MultiCommand):
     def __init__(self, plugin_folder, **attrs):
         super().__init__(**attrs)
         self.plugin_folder = plugin_folder
-        self.plugin_files = [x for x in self.plugin_folder.glob('**/*') if x.is_file() and x.suffix == '.py']
+        self.plugin_files = [
+            x
+            for x in self.plugin_folder.glob("**/*")
+            if x.is_file() and x.suffix == ".py"
+        ]
 
     def list_commands(self, ctx):
         rv = []
@@ -24,8 +28,8 @@ class MyCLI(click.MultiCommand):
 
     def get_command(self, ctx, name):
         ns = {}
-        fn = self.plugin_folder.joinpath(name + '.py')
+        fn = self.plugin_folder.joinpath(name + ".py")
         with open(fn) as f:
-            code = compile(f.read(), fn, 'exec')
+            code = compile(f.read(), fn, "exec")
             eval(code, ns, ns)
-        return ns['cli']
+        return ns["cli"]

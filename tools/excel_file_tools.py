@@ -8,6 +8,7 @@ inquire = Inquire()
 
 class ExcelFile:
     """Excel file class with helper functions for parsing Excel files"""
+
     def __init__(self, excel_file):
         self.path = Path(excel_file)
         self.excel_file = pd.ExcelFile(self.path)
@@ -49,7 +50,7 @@ class ExcelFile:
             inquire.CHECKBOX,
             message="Select sheets to export as files",
             name="sheets",
-            choices=[{"name": x, "checked": True} for x in sheet_names]
+            choices=[{"name": x, "checked": True} for x in sheet_names],
         )
         return inquire.ask()["sheets"]
 
@@ -60,12 +61,18 @@ class ExcelFile:
         :param raw_sheet_names: Do not strip sheet names
         :return: Data frame
         """
-        sheet_names = self.sheet_names if not filter else [x for x in self.sheet_names if x in filter]
+        sheet_names = (
+            self.sheet_names
+            if not filter
+            else [x for x in self.sheet_names if x in filter]
+        )
 
         data = {"Sheet Name": [], "Rows": [], "Columns": []}
         for sheet_name in sheet_names:
             sheet = self.get_sheet(sheet_name)
-            data["Sheet Name"].append(sheet_name if raw_sheet_names else sheet_name.strip())
+            data["Sheet Name"].append(
+                sheet_name if raw_sheet_names else sheet_name.strip()
+            )
             data["Rows"].append(len(sheet))
             data["Columns"].append(len(sheet.columns))
 

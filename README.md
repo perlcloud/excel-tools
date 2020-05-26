@@ -70,21 +70,27 @@ Options:
 ```
 $ python3 excel_tools.py list --help
 
-Usage: excel_tools.py list_sheets [OPTIONS] INPUT_FILE
+Usage: excel_tools.py list [OPTIONS] INPUT_FILE
 
   Lists the names of sheets in an excel file. Sheet metadata available with
   '-v/--verbose' flag!
 
 Options:
-  -n, --names-only       Output sheet names only.  [default: False]
-  -v, --verbose          Adds additional information about each sheet to
-                         output.  [default: False]
+  -n, --names-only                Output sheet names only.  [default: False]
+  -f, --filter                    Prompts user to select from a list of the
+                                  files sheets to get sheet info for.
 
-  -f, --filter           Prompts user to select from a list of the files
-                         sheets to get sheet info for.
+  -r, --raw-sheet-names           Stop script from stripping leading and
+                                  trailing spaces from sheet names.  [default:
+                                  False]
 
-  -r, --raw-sheet-names  Stop script from stripping leading and trailing
-                         spaces from sheet names.  [default: False]
+  -v, --verbose                   Adds additional information about each sheet
+                                  to output.  [default: False]
 
-  --help                 Show this message and exit.
+  -t, --table-style [plain|simple|github|grid|fancy_grid|pipe|orgtbl|jira|presto|pretty|psql|rst|mediawiki|moinmoin|youtrack|html|latex|latex_raw|latex_booktabs|textile]
+                                  Sets the style of table output for verbose
+                                  output. Use 'plain' for none.  [default:
+                                  github]
+
+  --help                          Show this message and exit.
 ```

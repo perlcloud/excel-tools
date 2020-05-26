@@ -3,11 +3,12 @@
 import click
 from utils.inquirer import Inquire
 import pandas as pd
+from tabulate import tabulate
 
 from tools.excel_file_tools import ExcelFile
 
 inquire = Inquire()
-pd.set_option('display.max_rows', None)
+pd.set_option("display.max_rows", None)
 
 
 @click.command()
@@ -20,14 +21,6 @@ pd.set_option('display.max_rows', None)
     is_flag=True,
     show_default=True,
     help="Output sheet names only.",
-    type=click.BOOL,
-)
-@click.option(
-    "-v",
-    "--verbose",
-    is_flag=True,
-    show_default=True,
-    help="Adds additional information about each sheet to output.",
     type=click.BOOL,
 )
 @click.option(
@@ -46,7 +39,46 @@ pd.set_option('display.max_rows', None)
     help="Stop script from stripping leading and trailing spaces from sheet names.",
     type=click.BOOL,
 )
-def list_sheets(input_file, names_only, verbose, filter, raw_sheet_names):
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    show_default=True,
+    help="Adds additional information about each sheet to output.",
+    type=click.BOOL,
+)
+@click.option(
+    "-t",
+    "--table-style",
+    default="github",
+    show_default=True,
+    help="Sets the style of table output for verbose output. Use 'plain' for none.",
+    type=click.Choice(
+        [
+            "plain",
+            "simple",
+            "github",
+            "grid",
+            "fancy_grid",
+            "pipe",
+            "orgtbl",
+            "jira",
+            "presto",
+            "pretty",
+            "psql",
+            "rst",
+            "mediawiki",
+            "moinmoin",
+            "youtrack",
+            "html",
+            "latex",
+            "latex_raw",
+            "latex_booktabs",
+            "textile",
+        ]
+    ),
+)
+def list_sheets(input_file, names_only, verbose, filter, raw_sheet_names, table_style):
     """
     Lists the names of sheets in an excel file.
     Sheet metadata available with '-v/--verbose' flag!
@@ -68,12 +100,14 @@ def list_sheets(input_file, names_only, verbose, filter, raw_sheet_names):
                 click.echo(
                     click.style(
                         "'--names-only' and '--verbose' is an illegal combination, ignoring '--names-only'.",
-                        fg='red'
+                        fg="red",
                     )
                 )
 
-            data = file.get_metadata(filter=sheet_names, raw_sheet_names=raw_sheet_names)
-            print(data)
+            data = file.get_metadata(
+                filter=sheet_names, raw_sheet_names=raw_sheet_names
+            )
+            print(tabulate(data, headers="keys", tablefmt=table_style))
         else:
             for index, sheet_name in enumerate(sheet_names):
                 sheet_name = sheet_name if raw_sheet_names else sheet_name.strip()
@@ -82,5 +116,5 @@ def list_sheets(input_file, names_only, verbose, filter, raw_sheet_names):
 
 cli = list_sheets
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

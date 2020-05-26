@@ -51,7 +51,9 @@ def split_sheet(input_file, output_dir, file_type, raw_sheet_names, suppress_pro
     Each Excel sheet is exported as an individual file, with a name matching the name of the Excel sheet
     """
     file = ExcelFile(input_file)
-    output_path = (Path.cwd().joinpath(file.path.stem) if not output_dir else Path(output_dir))
+    output_path = (
+        Path.cwd().joinpath(file.path.stem) if not output_dir else Path(output_dir)
+    )
     output_path.mkdir(exist_ok=True)  # Create output directory if it does not exist
 
     sheet_names = file.stripped_sheet_names if not raw_sheet_names else file.sheet_names
@@ -78,5 +80,5 @@ def split_sheet(input_file, output_dir, file_type, raw_sheet_names, suppress_pro
 cli = split_sheet
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli()

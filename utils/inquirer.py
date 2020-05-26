@@ -16,32 +16,38 @@ class Inquire:
     EDITOR = "editor"
 
     # Styles taken from the PyInquirer samples
-    STYLE_1 = style_from_dict({
-        Token.Separator: '#cc5454',
-        Token.QuestionMark: '#673ab7 bold',
-        Token.Selected: '#cc5454',  # default
-        Token.Pointer: '#673ab7 bold',
-        Token.Instruction: '',  # default
-        Token.Answer: '#f44336 bold',
-        Token.Question: '',
-    })
-    STYLE_2 = style_from_dict({
-        Token.Separator: '#6C6C6C',
-        Token.QuestionMark: '#FF9D00 bold',
-        # Token.Selected: '',  # default
-        Token.Selected: '#5F819D',
-        Token.Pointer: '#FF9D00 bold',
-        Token.Instruction: '',  # default
-        Token.Answer: '#5F819D bold',
-        Token.Question: '',
-    })
-    STYLE_3 = style_from_dict({
-        Token.QuestionMark: '#E91E63 bold',
-        Token.Selected: '#673AB7 bold',
-        Token.Instruction: '',  # default
-        Token.Answer: '#2196f3 bold',
-        Token.Question: '',
-    })
+    STYLE_1 = style_from_dict(
+        {
+            Token.Separator: "#cc5454",
+            Token.QuestionMark: "#673ab7 bold",
+            Token.Selected: "#cc5454",  # default
+            Token.Pointer: "#673ab7 bold",
+            Token.Instruction: "",  # default
+            Token.Answer: "#f44336 bold",
+            Token.Question: "",
+        }
+    )
+    STYLE_2 = style_from_dict(
+        {
+            Token.Separator: "#6C6C6C",
+            Token.QuestionMark: "#FF9D00 bold",
+            # Token.Selected: '',  # default
+            Token.Selected: "#5F819D",
+            Token.Pointer: "#FF9D00 bold",
+            Token.Instruction: "",  # default
+            Token.Answer: "#5F819D bold",
+            Token.Question: "",
+        }
+    )
+    STYLE_3 = style_from_dict(
+        {
+            Token.QuestionMark: "#E91E63 bold",
+            Token.Selected: "#673AB7 bold",
+            Token.Instruction: "",  # default
+            Token.Answer: "#2196f3 bold",
+            Token.Question: "",
+        }
+    )
 
     questions = []
 
@@ -49,17 +55,17 @@ class Inquire:
         self.style = style
 
     def question(
-            self,
-            question_type="input",
-            message=None,
-            name=None,
-            default=None,
-            choices=None,
-            validate=None,
-            filter=None,
-            when=None,
-            page_size=None,
-            eargs=None,
+        self,
+        question_type="input",
+        message=None,
+        name=None,
+        default=None,
+        choices=None,
+        validate=None,
+        filter=None,
+        when=None,
+        page_size=None,
+        eargs=None,
     ):
         question = {}
         question.update({"type": question_type}) if question_type else None
