@@ -45,7 +45,7 @@ Commands:
   split_sheet  Splits each sheet in an Excel file into individual files.
 ```
 ```
-$ python3 excel_tools.py split_sheet --help
+$ python3 excel_tools.py split --help
 
 Usage: excel_tools.py split_sheet [OPTIONS] INPUT_FILE
 
@@ -68,7 +68,7 @@ Options:
   --help                     Show this message and exit.
 ```
 ```
-$ python3 excel_tools.py list_sheets --help
+$ python3 excel_tools.py list --help
 
 Usage: excel_tools.py list_sheets [OPTIONS] INPUT_FILE
 

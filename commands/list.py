@@ -48,7 +48,8 @@ pd.set_option('display.max_rows', None)
 )
 def list_sheets(input_file, names_only, verbose, filter, raw_sheet_names):
     """
-    Lists the names of available sheets in an excel file with the option to list more verbose information.
+    Lists the names of sheets in an excel file.
+    Sheet metadata available with '-v/--verbose' flag!
     """
     file = ExcelFile(input_file)
     if not filter:
