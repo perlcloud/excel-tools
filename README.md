@@ -3,14 +3,18 @@ A command line utility for manipulating and processing Excel files.
 
 It aims to automate normalization processes on excel files, preparing them for further automation such as batch processing.
 
-Currently Contains one tool:
-- **split-sheet:**
+Current Tools:
+- **split_sheet:**
     
     Splits each sheet in an Excel file into individual files.
 
     A folder with the same name as the input file will be created.
     Each Excel sheet is exported as an individual file, with a name matching the name of the Excel sheet
-
+- **list_sheets:**
+    
+    Lists the names of sheets in an excel file.
+    Sheet metadata available with '-v/--verbose' flag! 
+    
 ## Installing
 
 This project requires Python 3.8.0
@@ -21,7 +25,8 @@ $ pip install -r requirements.txt
 ```
 ## Running
 ```
-$ python3 excel_tools.py split-sheet some_excel_file.xlsx
+$ python3 excel_tools.py split_sheet some_excel_file.xlsx
+$ python3 excel_tools.py list_sheets some_excel_file.xlsx
 ```
 ## Help
 ```
@@ -35,12 +40,14 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  split-sheet  Splits each sheet in an Excel file into individual files.
+  data_clean   Clean and normalize data in CSV Files
+  list_sheets  Lists the names of sheets in an excel file.
+  split_sheet  Splits each sheet in an Excel file into individual files.
 ```
 ```
-$ python3 excel_tools.py split-sheet --help
+$ python3 excel_tools.py split_sheet --help
 
-Usage: excel_tools.py split-sheet [OPTIONS] INPUT_FILE
+Usage: excel_tools.py split_sheet [OPTIONS] INPUT_FILE
 
   Splits each sheet in an Excel file into individual files.
 
@@ -59,4 +66,25 @@ Options:
                              Exports all when True.  [default: False]
 
   --help                     Show this message and exit.
+```
+```
+$ python3 excel_tools.py list_sheets --help
+
+Usage: excel_tools.py list_sheets [OPTIONS] INPUT_FILE
+
+  Lists the names of sheets in an excel file. Sheet metadata available with
+  '-v/--verbose' flag!
+
+Options:
+  -n, --names-only       Output sheet names only.  [default: False]
+  -v, --verbose          Adds additional information about each sheet to
+                         output.  [default: False]
+
+  -f, --filter           Prompts user to select from a list of the files
+                         sheets to get sheet info for.
+
+  -r, --raw-sheet-names  Stop script from stripping leading and trailing
+                         spaces from sheet names.  [default: False]
+
+  --help                 Show this message and exit.
 ```
