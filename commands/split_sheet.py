@@ -3,7 +3,9 @@
 import click
 from pathlib import Path
 import pandas as pd
-from PyInquirer import prompt
+from tools.inquirer import Inquire
+
+inquire = Inquire()
 
 
 @click.command()
@@ -60,16 +62,14 @@ def split_sheet(input_file, output_dir, file_type, raw_sheet_names, suppress_pro
     ]
 
     if not suppress_prompt:
-        # Assemble question for PyInquirer
-        select_sheets_for_export = [
-            {
-                "type": "checkbox",
-                "message": "Select sheets to export as files",
-                "name": "sheets",
-                "choices": [{"name": x, "checked": True} for x in sheet_names],
-            }
-        ]
-        sheets_for_export = prompt(select_sheets_for_export)["sheets"]
+        # Ask user for input via PyInquirer
+        inquire.question(
+            inquire.CHECKBOX,
+            message="Select sheets to export as files",
+            name="sheets",
+            choices=[{"name": x, "checked": True} for x in sheet_names]
+        )
+        sheets_for_export = inquire.ask()["sheets"]
     else:
         sheets_for_export = sheet_names
 
