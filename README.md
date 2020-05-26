@@ -40,9 +40,8 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  data_clean   Clean and normalize data in CSV Files
-  list_sheets  Lists the names of sheets in an excel file.
-  split_sheet  Splits each sheet in an Excel file into individual files.
+  list   Lists the names of sheets in an excel file.
+  split  Splits each sheet in an Excel file into individual files.
 ```
 ```
 $ python3 excel_tools.py split --help
